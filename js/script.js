@@ -41,7 +41,7 @@ function generate_field() {
     for (var y = 0; y < CELLS_H; y++) {
         field[y] = [];
         for (var x = 0; x < CELLS_W - (y % 2); x++) {
-            field[y][x] = new Bacterium(x, y, 'dead');
+            field[y][x] = new Bacterium(x, y, ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'orange'][randint(0, 6)]);
         }
     }
     return field;
@@ -63,4 +63,8 @@ function adjust_window() {
     } else {
         document.getElementById("canvas").style = "width: " + (c_w - 10) + "px";
     }
+}
+
+function randint(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
