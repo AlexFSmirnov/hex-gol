@@ -32,8 +32,9 @@ function setup_field() {
     canvas.height = (CELLS_H - 1) * y_change + CELL_RADIUS * 2;
 
     // Adding offset.
-    canvas.width += CELL_RADIUS;
-    canvas.height += CELL_RADIUS;
+    GLOBAL_OFFSET = x_change / 2;
+    canvas.width += GLOBAL_OFFSET;
+    canvas.height += GLOBAL_OFFSET;
 }
 
 function generate_field() {
@@ -50,7 +51,7 @@ function generate_field() {
 function draw_field() {
     for (var y = 0; y < field.length; y++) {
         for (var x = 0; x < field[y].length; x++) {
-            field[y][x].draw(CELL_RADIUS / 2);
+            field[y][x].draw(GLOBAL_OFFSET / 2);
         }
     }
 }
