@@ -16,6 +16,29 @@ class Bacterium {
         var y = y_offset + this.y * y_change + grid_offset;
         draw_hexagon(x, y, CELL_RADIUS / 10 * 9, races[this.race]);
     }
+
+    get neighbours() {
+        var x = this.x;
+        var y = this.y;
+        var neighbours = [  // + (y % 2): because of different lengths of rows.
+            [x - 1 + (y % 2), y - 1],
+            [x + (y % 2), y - 1],
+            [x - 1, y],
+            [x + 1, y],
+            [x - 1 + (y % 2), y + 1],
+            [x + (y % 2), y + 1],
+        ]
+        // Puting coords into range. (e.g. CELLS_W -> 0, -1 -> CELLS_W - 1)
+        for (var i = 0; i < 6; i++) {
+            var cur_x = neighbours[i][0];
+            var cur_y = neighbours[i][1];
+            var cur_width = CELLS_W - ((cur_y + 2) % 2);  // y+2: fix -1 -> 1
+            var cur_height = CELLS_H;
+            neighbours[i][0] = (cur_x + cur_width) % cur_width; 
+            neighbours[i][1] = (cur_y + cur_height) % cur_height;
+        }
+        return neighbours;
+    }
 }
 
 function draw_hexagon(x, y, radius, color) {

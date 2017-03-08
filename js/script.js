@@ -1,6 +1,5 @@
 function main() {
     draw_field();
-
     adjust_window();
     setTimeout(main, 1000 / FPS);
 }
@@ -19,8 +18,7 @@ function setup_field() {
     var client_w = document.documentElement.clientWidth;
     var client_h = document.documentElement.clientHeight;
 
-    // Trying to find correct cells rectangle, so that the amount of bacterias
-    // and the window aspect ratio is not distorted very much.
+    // Trying to fill the screen with a specific amount of cells.
     var x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
     var y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
     CELLS_W = client_w / x_change;
@@ -43,7 +41,7 @@ function generate_field() {
     for (var y = 0; y < CELLS_H; y++) {
         field[y] = [];
         for (var x = 0; x < CELLS_W - (y % 2); x++) {
-            field[y][x] = new Bacterium(x, y, ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'orange'][randint(0, 6)]);
+            field[y][x] = new Bacterium(x, y, ['dead', 'dead', 'orange'][randint(0, 2)]);
         }
     }
     return field;
