@@ -6,16 +6,19 @@ class Bacterium {
     }
 
     draw(grid_offset) {
+        // Distance between centers of hexagons on the grid.
+        var x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
+        var y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
+        // Offset from borders.
         var x_offset = (this.y % 2) ? x_change : x_change / 2;
         var y_offset = CELL_RADIUS;
         var x = x_offset + this.x * x_change + grid_offset;
         var y = y_offset + this.y * y_change + grid_offset;
-        draw_hexagon(x, y, CELL_RADIUS / 5 * 4.5, 
-            CELL_RADIUS / 5, races[this.race]);
+        draw_hexagon(x, y, CELL_RADIUS / 10 * 9, races[this.race]);
     }
 }
 
-function draw_hexagon(x, y, radius, line_width, color) {
+function draw_hexagon(x, y, radius, color) {
     ctx.beginPath();
     ctx.moveTo(x, y - radius);
     for (var i = 1; i <= 7; i++) {  // i <= 7: fix of the small gap on the top.
@@ -24,17 +27,13 @@ function draw_hexagon(x, y, radius, line_width, color) {
     }
     ctx.closePath();
 
-    ctx.lineWidth = line_width + 3;
+    ctx.lineWidth = radius / 10;
     ctx.strokeStyle = BACKGROUND_COLOR;
     ctx.stroke();
 
     ctx.fillStyle = color;
     ctx.fill();
 }
-
-// Distance between centers of hexagons on the grid.
-x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
-y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
 
 // Colors for races.
 var races = {

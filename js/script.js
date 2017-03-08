@@ -16,18 +16,20 @@ function setup() {
 }
 
 function setup_field() {
-    var c_width = document.documentElement.clientWidth;
-    var c_height = document.documentElement.clientHeight;
+    var client_w = document.documentElement.clientWidth;
+    var client_h = document.documentElement.clientHeight;
 
     // Trying to find correct cells rectangle, so that the amount of bacterias
     // and the window aspect ratio is not distorted very much.
-    var coeff = Math.sqrt(c_width * c_height) / Math.sqrt(CELL_AMOUNT);
-    CELLS_W = Math.floor(c_width / coeff);
-    CELLS_H = Math.floor(c_height / coeff);
-
-    // Resizing canvas
     var x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
     var y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
+    CELLS_W = client_w / x_change;
+    CELLS_H = (client_h - CELL_RADIUS * 2) / y_change + 1;
+    var coeff = Math.sqrt(CELL_AMOUNT) / Math.sqrt(CELLS_W * CELLS_H);
+    CELLS_W = Math.floor(CELLS_W * coeff);
+    CELLS_H = Math.floor(CELLS_H * coeff);
+
+    // Resizing the canvas.
     canvas.width = CELLS_W * x_change;
     canvas.height = (CELLS_H - 1) * y_change + CELL_RADIUS * 2;
 
@@ -58,7 +60,7 @@ function draw_field() {
 function adjust_window() {
     var c_w = document.documentElement.clientWidth;
     var c_h = document.documentElement.clientHeight;
-    if (c_w / c_h > CELLS_W / CELLS_H) {
+    if (c_w / c_h > canvas.width / canvas.height) {
         document.getElementById("canvas").style = "height: " + (c_h - 10) + "px";
     } else {
         document.getElementById("canvas").style = "width: " + (c_w - 10) + "px";
