@@ -49,7 +49,7 @@ function generate_field() {
     for (var y = 0; y < CELLS_H; y++) {
         field[y] = [];
         for (var x = 0; x < CELLS_W - (y % 2); x++) {
-            field[y][x] = new Bacterium(x, y, ['dead', 'dead', 'orange'][randint(0, 2)]);
+            field[y][x] = new Cell(x, y, ['dead', 'alive_1', 'alive_2'][randint(0, 2)]);
         }
     }
     return field;

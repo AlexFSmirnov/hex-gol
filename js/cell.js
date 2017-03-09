@@ -1,4 +1,4 @@
-class Bacterium {
+class Cell {
     constructor(x, y, race) {
         this.x = x;
         this.y = y;

@@ -6,11 +6,6 @@ FPS = 1;
 BACKGROUND_COLOR = "#444";
 RACES = {
     'dead': "#222",
-    'red': "#F00",
-    'green': "#0F0",
-    'blue': "#00F",
-    'cyan': "#0FF",
-    'magenta':"#F0F",
-    'yellow': "#FF0",
-    'orange': "#FFA500",
+    'alive_1': "#FFA500",
+    'alive_2': "#B57902"
 };
