@@ -1,10 +1,16 @@
 function main() {
+    field = generate_field();
+
+
     draw_field();
     adjust_window();
+
     setTimeout(main, 1000 / FPS);
 }
 
 function setup() {
+    document.body.style.backgroundColor = BACKGROUND_COLOR;
+
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
@@ -19,8 +25,9 @@ function setup_field() {
     var client_h = document.documentElement.clientHeight;
 
     // Trying to fill the screen with a specific amount of cells.
-    var x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
-    var y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
+    // x_change, y_change - distances between cell's centers.
+    var x_change = Math.cos(Math.PI / 6) * CELL_RADIUS * 2;
+    var y_change = Math.sin(Math.PI / 6) * CELL_RADIUS + CELL_RADIUS;
     CELLS_W = client_w / x_change;
     CELLS_H = (client_h - CELL_RADIUS * 2) / y_change + 1;
     var coeff = Math.sqrt(CELL_AMOUNT) / Math.sqrt(CELLS_W * CELLS_H);
@@ -60,9 +67,9 @@ function adjust_window() {
     var c_w = document.documentElement.clientWidth;
     var c_h = document.documentElement.clientHeight;
     if (c_w / c_h > canvas.width / canvas.height) {
-        document.getElementById("canvas").style = "height: " + (c_h - 10) + "px";
+        document.getElementById("canvas").style = "height: " + c_h + "px";
     } else {
-        document.getElementById("canvas").style = "width: " + (c_w - 10) + "px";
+        document.getElementById("canvas").style = "width: " + c_w + "px";
     }
 }
 
