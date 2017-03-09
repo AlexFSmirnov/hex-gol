@@ -1,10 +1,9 @@
 function main() {
-    field = generate_field();
-
+    update_field();
+    recalc_values();
 
     draw_field();
     adjust_window();
-
     setTimeout(main, 1000 / FPS);
 }
 
@@ -49,7 +48,8 @@ function generate_field() {
     for (var y = 0; y < CELLS_H; y++) {
         field[y] = [];
         for (var x = 0; x < CELLS_W - (y % 2); x++) {
-            field[y][x] = new Cell(x, y, ['dead', 'alive_1', 'alive_2'][randint(0, 2)]);
+            field[y][x] = new Cell(x, y, 
+                ['dead', 'alive_1', 'alive_2'][randint(0, 2)]);
         }
     }
     return field;
@@ -59,6 +59,22 @@ function draw_field() {
     for (var y = 0; y < field.length; y++) {
         for (var x = 0; x < field[y].length; x++) {
             field[y][x].draw(GLOBAL_OFFSET / 2);
+        }
+    }
+}
+
+function update_field() {
+    for (var y = 0; y < field.length; y++) {
+        for (var x = 0; x < field[y].length; x++) {
+            field[y][x].state = field[y][x].new_state;
+        }
+    }
+}
+
+function recalc_values() {
+    for (var y = 0; y < field.length; y++) {
+        for (var x = 0; x < field[y].length; x++) {
+            field[y][x].recalc_value();
         }
     }
 }

@@ -1,11 +1,10 @@
-CELL_AMOUNT = 500;
+CELL_AMOUNT = 1000;
 CELL_RADIUS = 25;
-FPS = 1;
+FPS = 60;
 
-// COLORS
 BACKGROUND_COLOR = "#444";
-RACES = {
+STATES = {
     'dead': "#222",
-    'alive_1': "#FFA500",
-    'alive_2': "#B57902"
+    'alive_1': "#7F5400",  
+    'alive_2': "#FFA500"
 };

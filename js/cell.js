@@ -1,8 +1,13 @@
 class Cell {
-    constructor(x, y, race) {
+    constructor(x, y, state) {
         this.x = x;
         this.y = y;
-        this.race = race;
+        this.state = state;
+        this.recalc_value();
+    }
+
+    recalc_value() {
+        this.value = {'dead': 0, 'alive_1': 1, 'alive_2': 2}[this.state];
     }
 
     draw(grid_offset) {
@@ -14,7 +19,7 @@ class Cell {
         var y_offset = CELL_RADIUS;
         var x = x_offset + this.x * x_change + grid_offset;
         var y = y_offset + this.y * y_change + grid_offset;
-        draw_hexagon(x, y, CELL_RADIUS * 0.9, RACES[this.race]);
+        draw_hexagon(x, y, CELL_RADIUS * 0.9, STATES[this.state]);
     }
 
     get neighbours() {
@@ -38,6 +43,33 @@ class Cell {
             neighbours[i][1] = (cur_y + cur_height) % cur_height;
         }
         return neighbours;
+    }
+
+    get sum() {
+        var neighbours = this.neighbours;
+        var sum = 0;
+        for (var i = 0; i < neighbours.length; i++) {
+            var x = neighbours[i][0];
+            var y = neighbours[i][1];
+            sum += field[y][x].value;
+        }
+        return sum;
+    }
+
+    get new_state() {
+        var sum = this.sum;
+        if (this.state == 'dead' && sum == 4) {
+            return 'alive_1';
+        } else if (this.state == 'alive_1' && 
+            ((sum >= 1 && sum <= 4) || sum == 6)) {
+            return 'alive_2';
+        } else if (this.state == 'alive_2' && (sum == 1 || sum == 2)) {
+            return 'alive_2';
+        } else if (this.state == 'alive_2' && sum == 4) {
+            return 'alive_1';
+        } else {
+            return 'dead';
+        }
     }
 }
 
