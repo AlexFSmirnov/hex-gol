@@ -8,7 +8,7 @@ class Cell {
     }
 
     recalc_value() {
-        this.value = {'dead': 0, 'alive_1': 1, 'alive_2': 2}[this.state];
+        this.value = {'dead': 0, 'half_dead': 1, 'alive': 2}[this.state];
     }
 
     draw(grid_offset, optimize) {
@@ -62,14 +62,14 @@ class Cell {
     get new_state() {
         var sum = this.sum;
         if (this.state == 'dead' && sum == 4) {
-            return 'alive_1';
-        } else if (this.state == 'alive_1' && 
+            return 'half_dead';
+        } else if (this.state == 'half_dead' && 
             ((sum >= 1 && sum <= 4) || sum == 6)) {
-            return 'alive_2';
-        } else if (this.state == 'alive_2' && (sum == 1 || sum == 2)) {
-            return 'alive_2';
-        } else if (this.state == 'alive_2' && sum == 4) {
-            return 'alive_1';
+            return 'alive';
+        } else if (this.state == 'alive' && (sum == 1 || sum == 2)) {
+            return 'alive';
+        } else if (this.state == 'alive' && sum == 4) {
+            return 'half_dead';
         } else {
             return 'dead';
         }
