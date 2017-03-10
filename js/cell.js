@@ -3,6 +3,7 @@ class Cell {
         this.x = x;
         this.y = y;
         this.state = state;
+        this.prev_state = 'none';
         this.recalc_value();
     }
 
@@ -10,16 +11,18 @@ class Cell {
         this.value = {'dead': 0, 'alive_1': 1, 'alive_2': 2}[this.state];
     }
 
-    draw(grid_offset) {
-        // Distance between centers of hexagons on the grid.
-        var x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
-        var y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
-        // Offset from borders.
-        var x_offset = (this.y % 2) ? x_change : x_change / 2;
-        var y_offset = CELL_RADIUS;
-        var x = x_offset + this.x * x_change + grid_offset;
-        var y = y_offset + this.y * y_change + grid_offset;
-        draw_hexagon(x, y, CELL_RADIUS * 0.9, STATES[this.state]);
+    draw(grid_offset, optimize) {
+        if (!optimize || this.state != this.prev_state) {
+            // Distance between centers of hexagons on the grid.
+            var x_change = Math.sin(Math.PI / 3) * CELL_RADIUS * 2;
+            var y_change = Math.cos(Math.PI / 3) * CELL_RADIUS + CELL_RADIUS;
+            // Offset from borders.
+            var x_offset = (this.y % 2) ? x_change : x_change / 2;
+            var y_offset = CELL_RADIUS;
+            var x = x_offset + this.x * x_change + grid_offset;
+            var y = y_offset + this.y * y_change + grid_offset;
+            draw_hexagon(x, y, CELL_RADIUS * 0.9, STATES[this.state]);
+        }
     }
 
     get neighbours() {

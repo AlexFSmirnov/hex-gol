@@ -1,9 +1,9 @@
 function main() {
     update_field();
-    recalc_values();
 
     draw_field();
     adjust_window();
+    recalc_values();
     setTimeout(main, 1000 / FPS);
 }
 
@@ -58,7 +58,7 @@ function generate_field() {
 function draw_field() {
     for (var y = 0; y < field.length; y++) {
         for (var x = 0; x < field[y].length; x++) {
-            field[y][x].draw(GLOBAL_OFFSET / 2);
+            field[y][x].draw(GLOBAL_OFFSET / 2, true);
         }
     }
 }
@@ -75,6 +75,7 @@ function recalc_values() {
     for (var y = 0; y < field.length; y++) {
         for (var x = 0; x < field[y].length; x++) {
             field[y][x].recalc_value();
+            field[y][x].prev_state = field[y][x].state;
         }
     }
 }
